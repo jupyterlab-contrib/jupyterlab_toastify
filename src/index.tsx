@@ -34,4 +34,5 @@ const extension: JupyterLabPlugin<void> = {
 };
 
 export { INotification };
+export { toast } from 'react-toastify';
 export default extension;
