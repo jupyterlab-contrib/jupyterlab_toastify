@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { LabToastContainer } from './ToastJupyterLab';
+import { LabToastContainer, INotification } from './ToastJupyterLab';
 
 import {
   JupyterLab, JupyterLabPlugin
@@ -33,4 +33,5 @@ const extension: JupyterLabPlugin<void> = {
   }
 };
 
+export { INotification };
 export default extension;
