@@ -1,0 +1,41 @@
+{
+  "name": "jupyterlab_toastify",
+  "version": "0.1.0",
+  "description": "Integrate 'react-toastify' nicely in JupyterLab.",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/fcollonval/jupyterlab_toastify",
+  "bugs": {
+    "url": "https://github.com/fcollonval/jupyterlab_toastify/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "Frederic Collonval",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fcollonval/jupyterlab_toastify.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^0.16.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1",
+    "typescript": "~2.6.0"
+  },
+  "jupyterlab": {
+    "extension": true
+  }
+}
