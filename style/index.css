@@ -1,0 +1,32 @@
+@import '~react-toastify/dist/ReactToastify.min.css';
+
+.Toastify__toast {
+  font-size: var(--jp-ui-font-size1);
+  font-family: var(--jp-ui-font-family);
+  color: var(--jp-ui-font-color1);
+  border-width: var(--jp-border-width);
+  border-radius: var(--jp-border-radius);
+  border-color: var(--jp-border-color1);
+  background: var(--jp-layout-color1);
+  box-shadow: var(--jp-elevation-z4);
+}
+
+.Toastify__toast--error {
+  background: var(--jp-error-color1);
+  color: var(--jp-ui-inverse-font-color1);
+}
+
+.Toastify__toast--warning {
+  background: var(--jp-warn-color1);
+  color: var(--jp-ui-inverse-font-color1);
+}
+
+.Toastify__toast--info {
+  background: var(--jp-info-color1);
+  color: var(--jp-ui-inverse-font-color1);
+}
+
+.Toastify__toast--success {
+  background: var(--jp-success-color1);
+  color: var(--jp-ui-inverse-font-color1);
+}
