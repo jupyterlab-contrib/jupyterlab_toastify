@@ -1,6 +1,7 @@
 @import '~react-toastify/dist/ReactToastify.min.css';
 
 .Toastify__toast {
+  min-height: unset;
   font-size: var(--jp-ui-font-size1);
   font-family: var(--jp-ui-font-family);
   color: var(--jp-ui-font-color1);
@@ -8,25 +9,105 @@
   border-radius: var(--jp-border-radius);
   border-color: var(--jp-border-color1);
   background: var(--jp-layout-color1);
-  box-shadow: var(--jp-elevation-z4);
+  box-shadow: var(--jp-elevation-z4);  
+}
+
+.Toastify__close-button {
+  color: transparent;
+  background-size: 16px;
+  height: 16px;
+  width: 16px;
+  background-image: var(--jp-icon-close);
+  background-position: center;
+  background-repeat: no-repeat;  
+}
+
+.Toastify__close-button:hover {
+  background-image: var(--jp-icon-close-circle);
 }
 
 .Toastify__toast--error {
-  background: var(--jp-error-color1);
-  color: var(--jp-ui-inverse-font-color1);
+  border-top: 5px solid var(--jp-error-color1);
+}
+
+.Toastify__toast--error::before {
+  content: '\F06A';
+  font-family: FontAwesome;
+  display: inline-block;
+  flex: 0 0 auto;
+  padding-top: 3px;
+  padding-right: 5px;
+  color: var(--jp-error-color1);
 }
 
 .Toastify__toast--warning {
-  background: var(--jp-warn-color1);
-  color: var(--jp-ui-inverse-font-color1);
+  border-top: 5px solid var(--jp-warn-color1);
+}
+
+.Toastify__toast--warning::before {
+  content: '\F071';
+  font-family: FontAwesome;
+  display: inline-block;
+  flex: 0 0 auto;
+  padding-top: 3px;
+  padding-right: 5px;
+  color: var(--jp-warn-color1);
 }
 
 .Toastify__toast--info {
-  background: var(--jp-info-color1);
-  color: var(--jp-ui-inverse-font-color1);
+  border-top: 5px solid var(--jp-info-color1);
+}
+
+.Toastify__toast--info::before {
+  content: '\F0F3';
+  font-family: FontAwesome;
+  display: inline-block;
+  flex: 0 0 auto;
+  padding-top: 3px;
+  padding-right: 5px;
+  color: var(--jp-info-color1);
 }
 
 .Toastify__toast--success {
-  background: var(--jp-success-color1);
-  color: var(--jp-ui-inverse-font-color1);
+  border-top: 5px solid var(--jp-success-color1);
+}
+
+.Toastify__toast--success::before {
+  content: '\F00C';
+  font-family: FontAwesome;
+  display: inline-block;
+  flex: 0 0 auto;
+  padding-top: 3px;  
+  padding-right: 5px;
+  color: var(--jp-success-color1);
+}
+
+@keyframes fa-spin{
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
+.Toastify__toast--default.jp-toastContainer-inprogress {
+  border-top: 5px solid var(--jp-layout-color1);
+}
+
+.Toastify__toast--default.jp-toastContainer-inprogress::before {
+  content: '\F110';
+  font-family: FontAwesome;
+  width: 1.28571429em;
+  text-align: center;
+  box-sizing: border-box;
+  display: inline-block;
+  flex: 0 0 auto;
+  padding: 2px 0px;
+  margin-right: 2px;
+
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
 }

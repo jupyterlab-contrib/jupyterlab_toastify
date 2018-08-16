@@ -23,8 +23,12 @@ const extension: JupyterLabPlugin<void> = {
       ReactDOM.render(<LabToastContainer />, node);
   
       /* For testing
+      let id = INotification.inProgress('Task in progress!')
+      setTimeout(INotification.update, 2500, id, 'Updating task...');
+      setTimeout(INotification.update, 3500, id, 'Task succeed', 'success', 3000);
       INotification.error('Error');
-      setTimeout(INotification.info, 500, 'Info');
+      setTimeout(INotification.info, 500, 
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis blandit tellus, non pulvinar justo.");
       setTimeout(INotification.warning, 1000, 'Warning');
       setTimeout(INotification.success, 1500, 'Success');
       setTimeout(INotification.notify, 2000, 'Default');

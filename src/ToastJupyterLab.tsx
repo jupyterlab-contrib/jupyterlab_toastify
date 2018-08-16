@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ToastContainer, ToastContainerProps, toast, ToastContent, ToastOptions, Slide } from 'react-toastify';
+import { ToastContainer, ToastContainerProps, toast, ToastContent, ToastOptions, Slide, UpdateOptions } from 'react-toastify';
 
 export class LabToastContainer extends React.Component<ToastContainerProps> {
   render() {
@@ -21,7 +21,8 @@ export namespace INotification {
     message,
     {
       type: 'error',
-      className: 'jp-toastContainer-error'
+      className: 'jp-toastContainer-error',
+      autoClose: false
     }
   );
   
@@ -29,7 +30,8 @@ export namespace INotification {
     message,
     {
       type: 'warning',
-      className: 'jp-toastContainer-warning'
+      className: 'jp-toastContainer-warning',
+      autoClose: false
     }
   );
   
@@ -48,6 +50,28 @@ export namespace INotification {
       className: 'jp-toastContainer-success'
     }
   );
+
+  export const inProgress = (message: string): number => toast(
+    message,
+    {
+      type: 'default',
+      className: 'jp-toastContainer-inprogress',
+      autoClose: false
+    }
+  )
+
+  export const update = function(
+    toastId: number, 
+    message: string, 
+    type?: 'info' | 'success' | 'warning' | 'error' | 'default',
+    autoClose?: number) 
+  {
+    let options : UpdateOptions = { render: message };
+    if (type !== undefined) options.type = type
+    if (autoClose !== undefined) options.autoClose = autoClose;
+
+    toast.update(toastId, options);
+  }
 
   export const notify = (content: ToastContent, options?: ToastOptions): number => toast(
     content,
