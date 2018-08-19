@@ -6,7 +6,8 @@ import {
   ToastContent,
   ToastOptions,
   Slide,
-  UpdateOptions
+  UpdateOptions,
+  ToastType
 } from "react-toastify";
 
 export class LabToastContainer extends React.Component<ToastContainerProps> {
@@ -62,7 +63,7 @@ export namespace INotification {
   export const update = function(
     toastId: number,
     message: string,
-    type?: "info" | "success" | "warning" | "error" | "default",
+    type?: ToastType,
     autoClose?: number
   ) {
     let options: UpdateOptions = { render: message };
