@@ -35,7 +35,7 @@ To close a notification, click on it.
 
 ## Prerequisites
 
-- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 0.33
+- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 0.34
 - [react](https://reactjs.org/) 0.16
 - [react-toastify](https://github.com/fkhadra/react-toastify) 0.4
 
