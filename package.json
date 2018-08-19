@@ -31,7 +31,7 @@
     "prepare": "npm run clean && npm run build"
   },
   "dependencies": {
-    "@jupyterlab/application": "^0.16.0",
+    "@jupyterlab/application": "^0.17.0",
     "react-toastify": "^4.2.0"
   },
   "peerDependencies": {

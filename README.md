@@ -7,37 +7,37 @@ Integrate 'react-toastify' nicely in JupyterLab.
 ## Usage
 
 ```javascript
-import { INotification } from 'jupyterlab_toastify';
+import { INotification } from "jupyterlab_toastify";
 
 // Error message notification - do not close automatically
-INotification.error('Error');
+INotification.error("Error");
 // Warning message notification - do not close automatically
-INotification.warning('Warning');
+INotification.warning("Warning");
 // Info message notification
-INotification.info('Info');
+INotification.info("Info");
 // Success message notification
-INotification.success('Success');
+INotification.success("Success");
 
 // Background task with progression animation
-let id = INotification.inProgress('Task in progress!');
+let id = INotification.inProgress("Task in progress!");
 // -> Update text
-INotification.update(id, 'Updating task...');
+INotification.update(id, "Updating task...");
 // -> Update text, status and set closing delay (in ms)
-INotification.update(id, 'Task succeed', 'success', 3000);
+INotification.update(id, "Task succeed", "success", 3000);
 
 // Default call using `toast` function
 // This is the only helper function taking two arguments: content and options.
 // See https://github.com/fkhadra/react-toastify#usage
-INotification.notify('Default');
+INotification.notify("Default");
 ```
 
 To close a notification, click on it.
 
 ## Prerequisites
 
-* [JupyterLab](https://github.com/jupyterlab/jupyterlab/)
-* [react](https://reactjs.org/)
-* [react-toastify](https://github.com/fkhadra/react-toastify)
+- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 0.33
+- [react](https://reactjs.org/) 0.16
+- [react-toastify](https://github.com/fkhadra/react-toastify) 0.4
 
 ## Installation
 
@@ -61,4 +61,3 @@ To rebuild the package and the JupyterLab app:
 npm run build
 jupyter lab build
 ```
-
