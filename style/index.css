@@ -1,4 +1,4 @@
-@import '~react-toastify/dist/ReactToastify.min.css';
+@import "~react-toastify/dist/ReactToastify.min.css";
 
 .Toastify__toast {
   min-height: unset;
@@ -9,7 +9,8 @@
   border-radius: var(--jp-border-radius);
   border-color: var(--jp-border-color1);
   background: var(--jp-layout-color1);
-  box-shadow: var(--jp-elevation-z4);  
+  box-shadow: var(--jp-elevation-z4);
+  cursor: default;
 }
 
 .Toastify__close-button {
@@ -19,7 +20,7 @@
   width: 16px;
   background-image: var(--jp-icon-close);
   background-position: center;
-  background-repeat: no-repeat;  
+  background-repeat: no-repeat;
 }
 
 .Toastify__close-button:hover {
@@ -31,7 +32,7 @@
 }
 
 .Toastify__toast--error::before {
-  content: '\F06A';
+  content: "\F06A";
   font-family: FontAwesome;
   display: inline-block;
   flex: 0 0 auto;
@@ -45,7 +46,7 @@
 }
 
 .Toastify__toast--warning::before {
-  content: '\F071';
+  content: "\F071";
   font-family: FontAwesome;
   display: inline-block;
   flex: 0 0 auto;
@@ -59,7 +60,7 @@
 }
 
 .Toastify__toast--info::before {
-  content: '\F0F3';
+  content: "\F0F3";
   font-family: FontAwesome;
   display: inline-block;
   flex: 0 0 auto;
@@ -73,23 +74,23 @@
 }
 
 .Toastify__toast--success::before {
-  content: '\F00C';
+  content: "\F00C";
   font-family: FontAwesome;
   display: inline-block;
   flex: 0 0 auto;
-  padding-top: 3px;  
+  padding-top: 3px;
   padding-right: 5px;
   color: var(--jp-success-color1);
 }
 
-@keyframes fa-spin{
+@keyframes fa-spin {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
-      -webkit-transform: rotate(359deg);
-      transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 
@@ -98,7 +99,7 @@
 }
 
 .Toastify__toast--default.jp-toastContainer-inprogress::before {
-  content: '\F110';
+  content: "\F110";
   font-family: FontAwesome;
   width: 1.28571429em;
   text-align: center;
