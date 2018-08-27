@@ -21,9 +21,31 @@ INotification.success("Success");
 // Background task with progression animation
 let id = INotification.inProgress("Task in progress!");
 // -> Update text
-INotification.update(id, "Updating task...");
+INotification.update({
+  toastId: id,
+  message: "Updating task..."
+});
 // -> Update text, status and set closing delay (in ms)
-INotification.update(id, "Task succeed", "success", 3000);
+INotification.update({
+  toastId: id,
+  message: "Task succeed",
+  type: "success",
+  autoClose: 3000
+});
+
+// Notification with two buttons
+INotification.error("Error with button", {
+  buttons: [
+    {
+      label: "Action1",
+      callback: () => alert("Action1 was clicked")
+    },
+    {
+      label: "Action2",
+      callback: () => alert("Action2 was clicked")
+    }
+  ]
+});
 
 // Default call using `toast` function
 // This is the only helper function taking two arguments: content and options.
@@ -44,6 +66,24 @@ To close a notification, click on it.
 ```bash
 jupyter labextension install jupyterlab_toastify
 ```
+
+## Changelog
+
+### v2.0.0
+
+- API change: helper functions accept options in addition to the message
+- API change: `update` requires object as input and not a lot of arguments
+- New option `buttons` to add buttons with custom callback to the notification
+
+### v1.x
+
+- First version using `react-toastify`
+- Five scenarii:
+  - Error
+  - Warning
+  - Info
+  - Success
+  - InProgress
 
 ## Development
 
