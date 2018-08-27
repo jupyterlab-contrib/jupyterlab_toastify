@@ -94,11 +94,11 @@
   }
 }
 
-.Toastify__toast--default.jp-toastContainer-inprogress {
+.Toastify__toast--default.jp-toast-inprogress {
   border-top: 5px solid var(--jp-layout-color1);
 }
 
-.Toastify__toast--default.jp-toastContainer-inprogress::before {
+.Toastify__toast--default.jp-toast-inprogress::before {
   content: "\F110";
   font-family: FontAwesome;
   width: 1.28571429em;
@@ -111,4 +111,31 @@
 
   -webkit-animation: fa-spin 1s infinite steps(8);
   animation: fa-spin 1s infinite steps(8);
+}
+
+.jp-toast-buttonBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+}
+
+.jp-toast-spacer {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.jp-toast-button {
+  border: solid var(--jp-border-width) var(--jp-border-color2);
+  font-size: var(--jp-ui-font-size0);
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-right: 0px;
+  margin-left: 3px;
+  color: var(--jp-ui-font-color1);
+  background-color: var(--jp-layout-color2);
+}
+
+.jp-toast-button:hover {
+  background-color: var(--jp-layout-color3);
 }
