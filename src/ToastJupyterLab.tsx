@@ -15,6 +15,7 @@ export class LabToastContainer extends React.Component<ToastContainerProps> {
     return (
       <ToastContainer
         draggable={false}
+        closeOnClick={false}
         hideProgressBar={true}
         newestOnTop
         position="bottom-right"
@@ -57,20 +58,24 @@ export namespace INotification {
     toast(message, {
       type: "default",
       className: "jp-toastContainer-inprogress",
-      autoClose: false
+      autoClose: false,
+      closeButton: false
     });
 
   export interface IUpdate {
-    toastId: number,
-    message: React.ReactNode,
-    type?: ToastType,
-    autoClose?: number
+    toastId: number;
+    message: React.ReactNode;
+    type?: ToastType;
+    autoClose?: number;
   }
 
   export const update = function(args: IUpdate) {
     let options: UpdateOptions = { render: args.message };
     if (args.type !== undefined) options.type = args.type;
-    if (args.autoClose !== undefined) options.autoClose = args.autoClose;
+    if (args.autoClose !== undefined) {
+      options.autoClose = args.autoClose;
+      options.closeButton = true;
+    }
 
     toast.update(args.toastId, options);
   };
