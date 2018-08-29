@@ -48,12 +48,11 @@ INotification.error("Error with button", {
 });
 
 // Default call using `toast` function
-// This is the only helper function taking two arguments: content and options.
 // See https://github.com/fkhadra/react-toastify#usage
 INotification.notify("Default");
 ```
 
-To close a notification, click on it.
+To close a notification, click on the close button.
 
 ## Prerequisites
 
