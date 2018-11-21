@@ -7,7 +7,7 @@ import {
   ToastOptions,
   Slide,
   UpdateOptions,
-  ToastType
+  TypeOptions
 } from "react-toastify";
 
 export class LabToastContainer extends React.Component<ToastContainerProps> {
@@ -37,7 +37,7 @@ export namespace INotification {
     /**
      * Callback function
      */
-    callback();
+    callback: () => void;
 
     /**
      * The caption for the button.
@@ -215,7 +215,7 @@ export namespace INotification {
   export interface IUpdate extends IOptions {
     toastId: number;
     message: React.ReactNode;
-    type?: ToastType;
+    type?: TypeOptions;
     autoClose?: number;
   }
 

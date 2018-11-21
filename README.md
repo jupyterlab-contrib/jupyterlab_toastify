@@ -56,9 +56,9 @@ To close a notification, click on the close button.
 
 ## Prerequisites
 
-- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 0.34
+- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 0.35
 - [react](https://reactjs.org/) 0.16
-- [react-toastify](https://github.com/fkhadra/react-toastify) 0.4
+- [react-toastify](https://github.com/fkhadra/react-toastify) 4.4
 
 ## Installation
 
@@ -67,6 +67,11 @@ jupyter labextension install jupyterlab_toastify
 ```
 
 ## Changelog
+
+### v2.1.0
+
+- Update to JupyterLab 0.35
+- Update to react-toastify 4.4 => change enum for notifications type to `react-toastify\TypeOptions`
 
 ### v2.0.0
 
