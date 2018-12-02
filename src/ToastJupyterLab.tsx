@@ -10,6 +10,9 @@ import {
   TypeOptions
 } from "react-toastify";
 
+/**
+ * React component that will contains all toast produced through INotification
+ */
 export class LabToastContainer extends React.Component<ToastContainerProps> {
   render() {
     return (
@@ -20,7 +23,6 @@ export class LabToastContainer extends React.Component<ToastContainerProps> {
         newestOnTop
         position="bottom-right"
         className="jp-toastContainer"
-        // autoClose={false}
         transition={Slide}
       />
     );
@@ -62,6 +64,7 @@ export namespace INotification {
     closeToast: () => void;
   }
 
+  /** Create a button with customized callback in a toast */
   const ToastButton = ({
     button,
     closeToast
@@ -85,7 +88,8 @@ export namespace INotification {
    * Notification options
    */
   export interface IOptions {
-    buttons: Array<IButton>;
+    /** List of buttons with callback action to include in a toast */
+    buttons?: Array<IButton>;
   }
 
   /**
@@ -123,7 +127,7 @@ export namespace INotification {
         </div>
       );
     } else {
-      return message;
+      return <div>{message}</div>;
     }
   }
 
@@ -166,8 +170,7 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): number => {
-    let autoClose =
-      options !== undefined && options.buttons.length > 0 ? false : undefined;
+    let autoClose = options && options.buttons.length > 0 ? false : undefined;
     return toast(
       ({ closeToast }) => createToast(message, closeToast, options),
       {
@@ -180,7 +183,7 @@ export namespace INotification {
 
   /**
    * Helper function to show a success notification. Those
-   * notification close automatically.
+   * notifications close automatically.
    *
    * @param message Message to be printed in the notification
    * @param options Options for the error notification
@@ -189,8 +192,7 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): number => {
-    let autoClose =
-      options !== undefined && options.buttons.length > 0 ? false : undefined;
+    let autoClose = options && options.buttons.length > 0 ? false : undefined;
     return toast(
       ({ closeToast }) => createToast(message, closeToast, options),
       {
@@ -201,6 +203,13 @@ export namespace INotification {
     );
   };
 
+  /**
+   * Helper function to show a in progress notification. Those
+   * notifications do not close automatically.
+   *
+   * @param message Message to be printed in the notification
+   * @param options Options for the error notification
+   */
   export const inProgress = (
     message: React.ReactNode,
     options?: IOptions
@@ -208,20 +217,35 @@ export namespace INotification {
     toast(({ closeToast }) => createToast(message, closeToast, options), {
       type: "default",
       className: "jp-toast-inprogress",
-      autoClose: false,
-      closeButton: false
+      autoClose: false
     });
 
+  /** Options needed to update an existing toast */
   export interface IUpdate extends IOptions {
+    /** Id of the toast to be updated */
     toastId: number;
+    /** New message to be displayed */
     message: React.ReactNode;
+    /** New type of the toast */
     type?: TypeOptions;
+    /**
+     * Autoclosing behavior - undefined (not closing automatically)
+     * or number (time in milliseconds before closing a toast)
+     */
     autoClose?: number;
   }
 
+  /**
+   * Update an existing toast.
+   *
+   * If the toast is inactive (i.e. closed), a new one with the provided id
+   * will be created with the new content.
+   *
+   * @param args Update options
+   */
   export const update = function(args: IUpdate) {
     let autoClose =
-      args.buttons !== undefined && args.buttons.length > 0
+      args.buttons && args.buttons.length > 0
         ? args.autoClose || false
         : args.autoClose;
     const closeToast = () => {
@@ -230,15 +254,45 @@ export namespace INotification {
     let options: UpdateOptions = {
       render: createToast(args.message, closeToast, { buttons: args.buttons })
     };
-    if (args.type !== undefined) options.type = args.type;
-    if (autoClose !== undefined) {
+    if (args.type) options.type = args.type;
+    if (autoClose) {
       options.autoClose = autoClose;
-      options.closeButton = null;
     }
 
-    toast.update(args.toastId, options);
+    if (toast.isActive(args.toastId)) {
+      // Update existing toast
+      toast.update(args.toastId, options);
+    } else {
+      // Needs to recreate a closed toast
+      options.toastId = args.toastId;
+      if (!options.type) {
+        // If not type specifed, assumes it is `in progress`
+        options = {
+          ...options,
+          type: "default",
+          className: "jp-toast-inprogress",
+          autoClose: false
+        };
+      }
+      toast(options.render, options);
+    }
   };
 
+  /**
+   * Dismiss one toast (specified by its id) or all if no id provided
+   *
+   * @param toastId Toast id
+   */
+  export const dismiss = (toastId?: number): void => {
+    toast.dismiss(toastId);
+  };
+
+  /**
+   * Proxy to `toast` function from `react-toastify` module
+   *
+   * @param content Toast content
+   * @param options Toast creation option
+   */
   export const notify = (
     content: ToastContent,
     options?: ToastOptions
