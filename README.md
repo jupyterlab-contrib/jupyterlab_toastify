@@ -47,6 +47,12 @@ INotification.error("Error with button", {
   ]
 });
 
+// Close a toast specified by its id
+INotification.dismiss(id);
+
+// Close all toasts
+INotification.dismiss();
+
 // Default call using `toast` function
 // See https://github.com/fkhadra/react-toastify#usage
 INotification.notify("Default");
@@ -67,6 +73,12 @@ jupyter labextension install jupyterlab_toastify
 ```
 
 ## Changelog
+
+### v2.2.0
+
+- Different corrections
+- `buttons` optional in `update`
+- `dismiss` is visible through the `INotification` proxy
 
 ### v2.1.0
 
