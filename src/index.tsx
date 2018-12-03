@@ -54,7 +54,7 @@ const extension: JupyterLabPlugin<void> = {
       //   ]
       // });
 
-      // let id2 = INotification.inProgress("Task2 in progress!");
+      // let id2 = INotification.inProgress("Task2 in progress! But how long will it take to get it done?");
       // setTimeout(INotification.update, 4500, {
       //   toastId: id2,
       //   message: "Task2 succeed",
