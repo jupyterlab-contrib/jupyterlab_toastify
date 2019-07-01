@@ -62,7 +62,7 @@ To close a notification, click on the close button.
 
 ## Prerequisites
 
-- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 0.35
+- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 1.0
 - [react](https://reactjs.org/) 0.16
 - [react-toastify](https://github.com/fkhadra/react-toastify) 4.4
 
@@ -73,6 +73,10 @@ jupyter labextension install jupyterlab_toastify
 ```
 
 ## Changelog
+
+### v2.3.0
+
+- Port to JupyterLab v1
 
 ### v2.2.0
 
