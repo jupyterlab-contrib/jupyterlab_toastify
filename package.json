@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab_toastify",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Integrate 'react-toastify' nicely in JupyterLab.",
   "keywords": [
     "jupyter",
@@ -19,38 +19,47 @@
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "style": "style/index.css",
   "repository": {
     "type": "git",
     "url": "https://github.com/fcollonval/jupyterlab_toastify.git"
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf lib",
+    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
     "watch": "tsc -w",
     "precommit": "pretty-quick --staged",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "jlpm run clean && jlpm run build"
   },
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
     "react-toastify": "^4.4.3"
   },
   "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
+    "@types/react-dom": "^16.9.0",
+    "@types/react-toastify": "^4.0.2",
     "husky": "^0.14.3",
     "prettier": "1.14.2",
     "pretty-quick": "^1.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "rimraf": "^2.6.1",
-    "typescript": "~3.1.1"
+    "rimraf": "~2.6.1",
+    "typescript": "~3.5.2"
   },
+  "sideEffects": [
+    "style/*.css"
+  ],
   "jupyterlab": {
     "extension": true
   },
   "publishConfig": {
     "access": "public"
+  },
+  "resolutions": {
+    "@types/react": "~16.8.0"
   }
 }

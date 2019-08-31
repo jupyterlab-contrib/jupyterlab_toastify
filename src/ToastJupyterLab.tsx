@@ -68,6 +68,9 @@ export namespace INotification {
   const ToastButton = ({
     button,
     closeToast
+  }: {
+    button: IButton;
+    closeToast: () => void;
   }): React.ReactElement<ToastButtonProps> => {
     let fullClassName =
       button.className === undefined
@@ -139,25 +142,36 @@ export namespace INotification {
    * @param options Options for the error notification
    */
   export const error = (message: React.ReactNode, options?: IOptions): number =>
-    toast(({ closeToast }) => createToast(message, closeToast, options), {
-      type: "error",
-      className: "jp-toast-error",
-      autoClose: false
-    });
+    toast(
+      ({ closeToast }: { closeToast: () => void }) =>
+        createToast(message, closeToast, options),
+      {
+        type: "error",
+        className: "jp-toast-error",
+        autoClose: false
+      }
+    );
 
   /**
    * Helper function to show a warning notification. Those
    * notifications need an user action to close.
    *
    * @param message Message to be printed in the notification
-   * @param options Options for the error notification
+   * @param options Options for the warning notification
    */
-  export const warning = (message: React.ReactNode): number =>
-    toast(message, {
-      type: "warning",
-      className: "jp-toast-warning",
-      autoClose: false
-    });
+  export const warning = (
+    message: React.ReactNode,
+    options?: IOptions
+  ): number =>
+    toast(
+      ({ closeToast }: { closeToast: () => void }) =>
+        createToast(message, closeToast, options),
+      {
+        type: "warning",
+        className: "jp-toast-warning",
+        autoClose: false
+      }
+    );
 
   /**
    * Helper function to show an informative notification. Those
@@ -172,7 +186,8 @@ export namespace INotification {
   ): number => {
     let autoClose = options && options.buttons.length > 0 ? false : undefined;
     return toast(
-      ({ closeToast }) => createToast(message, closeToast, options),
+      ({ closeToast }: { closeToast: () => void }) =>
+        createToast(message, closeToast, options),
       {
         type: "info",
         className: "jp-toast-info",
@@ -194,7 +209,8 @@ export namespace INotification {
   ): number => {
     let autoClose = options && options.buttons.length > 0 ? false : undefined;
     return toast(
-      ({ closeToast }) => createToast(message, closeToast, options),
+      ({ closeToast }: { closeToast: () => void }) =>
+        createToast(message, closeToast, options),
       {
         type: "success",
         className: "jp-toast-success",
@@ -214,11 +230,15 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): number =>
-    toast(({ closeToast }) => createToast(message, closeToast, options), {
-      type: "default",
-      className: "jp-toast-inprogress",
-      autoClose: false
-    });
+    toast(
+      ({ closeToast }: { closeToast: () => void }) =>
+        createToast(message, closeToast, options),
+      {
+        type: "default",
+        className: "jp-toast-inprogress",
+        autoClose: false
+      }
+    );
 
   /** Options needed to update an existing toast */
   export interface IUpdate extends IOptions {

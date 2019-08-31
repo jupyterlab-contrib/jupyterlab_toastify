@@ -74,6 +74,11 @@ jupyter labextension install jupyterlab_toastify
 
 ## Changelog
 
+### v2.3.1
+
+- BUG `INotification.warning` does not accept options.
+- Respect latest extension cookiecutter parameters
+
 ### v2.3.0
 
 - Port to JupyterLab v1
