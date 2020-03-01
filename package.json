@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab_toastify",
-  "version": "2.3.2",
+  "version": "3.0.0",
   "description": "Integrate 'react-toastify' nicely in JupyterLab.",
   "keywords": [
     "jupyter",
@@ -32,7 +32,7 @@
     "prepare": "jlpm run clean && jlpm run build"
   },
   "dependencies": {
-    "@jupyterlab/application": "^1.0.0",
+    "@jupyterlab/application": "^2.0.0",
     "react-toastify": "^4.4.3"
   },
   "peerDependencies": {
@@ -48,7 +48,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "rimraf": "~2.6.1",
-    "typescript": "~3.5.2"
+    "typescript": "~3.7.0"
   },
   "sideEffects": [
     "style/*.css"
