@@ -93,6 +93,11 @@ export namespace INotification {
   export interface IOptions {
     /** List of buttons with callback action to include in a toast */
     buttons?: Array<IButton>;
+    /**
+     * Autoclosing behavior - undefined (not closing automatically)
+     * or number (time in milliseconds before closing a toast)
+     */
+    autoClose?: number;
   }
 
   /**
@@ -148,7 +153,7 @@ export namespace INotification {
       {
         type: "error",
         className: "jp-toast-error",
-        autoClose: false
+        autoClose: (options && options.autoClose) || false
       }
     );
 
@@ -169,7 +174,7 @@ export namespace INotification {
       {
         type: "warning",
         className: "jp-toast-warning",
-        autoClose: false
+        autoClose: (options && options.autoClose) || false
       }
     );
 
@@ -184,7 +189,10 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): number => {
-    let autoClose = options && options.buttons.length > 0 ? false : undefined;
+    let autoClose =
+      options && options.buttons.length > 0
+        ? options.autoClose || false
+        : undefined;
     return toast(
       ({ closeToast }: { closeToast: () => void }) =>
         createToast(message, closeToast, options),
@@ -207,7 +215,10 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): number => {
-    let autoClose = options && options.buttons.length > 0 ? false : undefined;
+    let autoClose =
+      options && options.buttons.length > 0
+        ? options.autoClose || false
+        : undefined;
     return toast(
       ({ closeToast }: { closeToast: () => void }) =>
         createToast(message, closeToast, options),
@@ -236,7 +247,7 @@ export namespace INotification {
       {
         type: "default",
         className: "jp-toast-inprogress",
-        autoClose: false
+        autoClose: (options && options.autoClose) || false
       }
     );
 
@@ -286,12 +297,12 @@ export namespace INotification {
       // Needs to recreate a closed toast
       options.toastId = args.toastId;
       if (!options.type) {
-        // If not type specifed, assumes it is `in progress`
+        // If not type specified, assumes it is `in progress`
         options = {
           ...options,
           type: "default",
           className: "jp-toast-inprogress",
-          autoClose: false
+          autoClose: options.autoClose || false
         };
       }
       toast(options.render, options);
