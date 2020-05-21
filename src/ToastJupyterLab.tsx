@@ -1,33 +1,13 @@
 import * as React from "react";
 import {
-  ToastContainer,
-  ToastContainerProps,
-  toast,
   ToastContent,
   ToastOptions,
-  Slide,
   UpdateOptions,
-  TypeOptions
+  TypeOptions,
+  ToastContainerProps,
+  ClearWaitingQueueParams,
+  ToastTransitionProps
 } from "react-toastify";
-
-/**
- * React component that will contains all toast produced through INotification
- */
-export class LabToastContainer extends React.Component<ToastContainerProps> {
-  render() {
-    return (
-      <ToastContainer
-        draggable={false}
-        closeOnClick={false}
-        hideProgressBar={true}
-        newestOnTop
-        position="bottom-right"
-        className="jp-toastContainer"
-        transition={Slide}
-      />
-    );
-  }
-}
 
 export namespace INotification {
   export interface IButton {
@@ -105,24 +85,20 @@ export namespace INotification {
    *
    * @param message Message to print in the notification
    * @param closeHandler Function closing the notification
-   * @param options Notification options
+   * @param buttons Toast buttons
    */
-  function createToast(
+  function createContent(
     message: React.ReactNode,
     closeHandler: () => void,
-    options?: IOptions
+    buttons?: IButton[]
   ): React.ReactNode {
-    if (
-      options !== undefined &&
-      options.buttons !== undefined &&
-      options.buttons.length > 0
-    ) {
+    if (buttons && buttons.length > 0) {
       return (
         <div>
           {message}
           <div className="jp-toast-buttonBar">
             <div className="jp-toast-spacer" />
-            {options.buttons.map((button, idx) => {
+            {buttons.map((button, idx) => {
               return (
                 <ToastButton
                   key={"button-" + idx}
@@ -139,44 +115,64 @@ export namespace INotification {
     }
   }
 
+  async function createToast(
+    message: React.ReactNode,
+    buttons?: IButton[],
+    options?: ToastOptions
+  ): Promise<React.ReactText> {
+    let _resolve: (value: React.ReactText) => void;
+    const toast = await Private.toast();
+    const promise = new Promise<React.ReactText>(resolve => {
+      _resolve = resolve;
+    });
+    const toastId: React.ReactText = toast(
+      ({ closeToast }: { closeToast: () => void }) =>
+        createContent(message, closeToast, buttons),
+      {
+        ...options,
+        onOpen: () => _resolve(toastId)
+      }
+    );
+
+    return promise;
+  }
+
   /**
    * Helper function to show an error notification. Those
    * notifications need an user action to close.
    *
    * @param message Message to be printed in the notification
    * @param options Options for the error notification
+   * @returns ToastId
    */
-  export const error = (message: React.ReactNode, options?: IOptions): number =>
-    toast(
-      ({ closeToast }: { closeToast: () => void }) =>
-        createToast(message, closeToast, options),
-      {
-        type: "error",
-        className: "jp-toast-error",
-        autoClose: (options && options.autoClose) || false
-      }
-    );
-
+  export const error = async (
+    message: React.ReactNode,
+    options?: IOptions
+  ): Promise<React.ReactText> => {
+    return createToast(message, options && options.buttons, {
+      type: "error",
+      className: "jp-toast-error",
+      autoClose: (options && options.autoClose) || false
+    });
+  };
   /**
    * Helper function to show a warning notification. Those
    * notifications need an user action to close.
    *
    * @param message Message to be printed in the notification
    * @param options Options for the warning notification
+   * @returns ToastId
    */
-  export const warning = (
+  export const warning = async (
     message: React.ReactNode,
     options?: IOptions
-  ): number =>
-    toast(
-      ({ closeToast }: { closeToast: () => void }) =>
-        createToast(message, closeToast, options),
-      {
-        type: "warning",
-        className: "jp-toast-warning",
-        autoClose: (options && options.autoClose) || false
-      }
-    );
+  ): Promise<React.ReactText> => {
+    return createToast(message, options && options.buttons, {
+      type: "warning",
+      className: "jp-toast-warning",
+      autoClose: (options && options.autoClose) || false
+    });
+  };
 
   /**
    * Helper function to show an informative notification. Those
@@ -184,24 +180,20 @@ export namespace INotification {
    *
    * @param message Message to be printed in the notification
    * @param options Options for the error notification
+   * @returns ToastId
    */
-  export const info = (
+  export const info = async (
     message: React.ReactNode,
     options?: IOptions
-  ): number => {
-    let autoClose =
-      options && options.buttons.length > 0
-        ? options.autoClose || false
-        : undefined;
-    return toast(
-      ({ closeToast }: { closeToast: () => void }) =>
-        createToast(message, closeToast, options),
-      {
-        type: "info",
-        className: "jp-toast-info",
-        autoClose: autoClose
-      }
-    );
+  ): Promise<React.ReactText> => {
+    const buttons = options && options.buttons;
+    const autoClose =
+      options.autoClose || (buttons && buttons.length > 0 ? false : undefined);
+    return createToast(message, buttons, {
+      type: "info",
+      className: "jp-toast-info",
+      autoClose: autoClose
+    });
   };
 
   /**
@@ -210,24 +202,20 @@ export namespace INotification {
    *
    * @param message Message to be printed in the notification
    * @param options Options for the error notification
+   * @returns ToastId
    */
-  export const success = (
+  export const success = async (
     message: React.ReactNode,
     options?: IOptions
-  ): number => {
-    let autoClose =
-      options && options.buttons.length > 0
-        ? options.autoClose || false
-        : undefined;
-    return toast(
-      ({ closeToast }: { closeToast: () => void }) =>
-        createToast(message, closeToast, options),
-      {
-        type: "success",
-        className: "jp-toast-success",
-        autoClose: autoClose
-      }
-    );
+  ): Promise<React.ReactText> => {
+    const buttons = options && options.buttons;
+    const autoClose =
+      options.autoClose || (buttons && buttons.length > 0 ? false : undefined);
+    return createToast(message, buttons, {
+      type: "success",
+      className: "jp-toast-success",
+      autoClose: autoClose
+    });
   };
 
   /**
@@ -236,25 +224,23 @@ export namespace INotification {
    *
    * @param message Message to be printed in the notification
    * @param options Options for the error notification
+   * @returns ToastId
    */
-  export const inProgress = (
+  export const inProgress = async (
     message: React.ReactNode,
     options?: IOptions
-  ): number =>
-    toast(
-      ({ closeToast }: { closeToast: () => void }) =>
-        createToast(message, closeToast, options),
-      {
-        type: "default",
-        className: "jp-toast-inprogress",
-        autoClose: (options && options.autoClose) || false
-      }
-    );
+  ): Promise<React.ReactText> => {
+    return createToast(message, options && options.buttons, {
+      type: "default",
+      className: "jp-toast-inprogress",
+      autoClose: (options && options.autoClose) || false
+    });
+  };
 
   /** Options needed to update an existing toast */
   export interface IUpdate extends IOptions {
     /** Id of the toast to be updated */
-    toastId: number;
+    toastId: React.ReactText;
     /** New message to be displayed */
     message: React.ReactNode;
     /** New type of the toast */
@@ -274,38 +260,41 @@ export namespace INotification {
    *
    * @param args Update options
    */
-  export const update = function(args: IUpdate) {
-    let autoClose =
-      args.buttons && args.buttons.length > 0
-        ? args.autoClose || false
-        : args.autoClose;
-    const closeToast = () => {
-      toast.dismiss(args.toastId);
-    };
-    let options: UpdateOptions = {
-      render: createToast(args.message, closeToast, { buttons: args.buttons })
-    };
-    if (args.type) options.type = args.type;
+  export const update = async (args: IUpdate): Promise<void> => {
+    const toast = await Private.toast();
+    const buttons = args.buttons;
+    let options: ToastOptions = {};
+    if (args.type) {
+      options.type = args.type;
+    }
+    const autoClose =
+      args.autoClose || (buttons && buttons.length > 0 ? false : undefined);
     if (autoClose) {
       options.autoClose = autoClose;
     }
 
     if (toast.isActive(args.toastId)) {
       // Update existing toast
-      toast.update(args.toastId, options);
+      const closeToast = () => {
+        toast.dismiss(args.toastId);
+      };
+      toast.update(args.toastId, {
+        ...options,
+        render: createContent(args.message, closeToast, args.buttons)
+      });
     } else {
       // Needs to recreate a closed toast
-      options.toastId = args.toastId;
-      if (!options.type) {
-        // If not type specified, assumes it is `in progress`
-        options = {
-          ...options,
-          type: "default",
-          className: "jp-toast-inprogress",
-          autoClose: options.autoClose || false
-        };
-      }
-      toast(options.render, options);
+
+      // If not type specified, assumes it is `in progress`
+      const newOptions: ToastOptions = {
+        autoClose: false,
+        className: "jp-toast-inprogress",
+        toastId: args.toastId,
+        type: "default",
+        ...options
+      };
+
+      await createToast(args.message, args.buttons, newOptions);
     }
   };
 
@@ -313,19 +302,139 @@ export namespace INotification {
    * Dismiss one toast (specified by its id) or all if no id provided
    *
    * @param toastId Toast id
+   * @returns False or void
    */
-  export const dismiss = (toastId?: number): void => {
-    toast.dismiss(toastId);
+  export const dismiss = async (
+    toastId?: React.ReactText
+  ): Promise<false | void> => {
+    const toast = await Private.toast();
+    return toast.dismiss(toastId);
   };
 
   /**
    * Proxy to `toast` function from `react-toastify` module
    *
+   * The Promise is due to the asynchronous import of the dependency
+   *
    * @param content Toast content
    * @param options Toast creation option
+   * @returns ToastId
    */
-  export const notify = (
+  export const notify = async (
     content: ToastContent,
     options?: ToastOptions
-  ): number => toast(content, options);
+  ): Promise<React.ReactText> => {
+    const toast = await Private.toast();
+    return toast(content, options);
+  };
+}
+
+interface IToast {
+  (content: ToastContent, options?: ToastOptions | undefined): React.ReactText;
+  success(
+    content: ToastContent,
+    options?: ToastOptions | undefined
+  ): React.ReactText;
+  info(
+    content: ToastContent,
+    options?: ToastOptions | undefined
+  ): React.ReactText;
+  error(
+    content: ToastContent,
+    options?: ToastOptions | undefined
+  ): React.ReactText;
+  warning(
+    content: ToastContent,
+    options?: ToastOptions | undefined
+  ): React.ReactText;
+  dark(
+    content: ToastContent,
+    options?: ToastOptions | undefined
+  ): React.ReactText;
+  /**
+   * Maybe I should remove warning in favor of warn, I don't know
+   */
+  warn: (
+    content: ToastContent,
+    options?: ToastOptions | undefined
+  ) => React.ReactText;
+  /**
+   * Remove toast programmatically
+   */
+  dismiss(id?: React.ReactText): false | void;
+  /**
+   * Clear waiting queue when limit is used
+   */
+  clearWaitingQueue(params?: ClearWaitingQueueParams): false | void;
+  /**
+   * return true if one container is displaying the toast
+   */
+  isActive(id: React.ReactText): boolean;
+  update(toastId: React.ReactText, options?: UpdateOptions): void;
+  /**
+   * Used for controlled progress bar.
+   */
+  done(id: React.ReactText): void;
+  /**
+   * Track changes. The callback get the number of toast displayed
+   *
+   */
+  onChange(
+    callback: (toast: number, containerId?: React.ReactText) => void
+  ): () => void;
+  /**
+   * Configure the ToastContainer when lazy mounted
+   */
+  configure(config?: ToastContainerProps): void;
+  POSITION: {
+    TOP_LEFT: string;
+    TOP_RIGHT: string;
+    TOP_CENTER: string;
+    BOTTOM_LEFT: string;
+    BOTTOM_RIGHT: string;
+    BOTTOM_CENTER: string;
+  };
+  TYPE: {
+    INFO: string;
+    SUCCESS: string;
+    WARNING: string;
+    ERROR: string;
+    DEFAULT: string;
+    DARK: string;
+  };
+}
+
+namespace Private {
+  let toastify: {
+    toast: IToast;
+    Slide: (
+      {
+        children,
+        position,
+        preventExitTransition,
+        done,
+        ...props
+      }: ToastTransitionProps
+    ) => JSX.Element;
+  } = null;
+
+  export async function toast(): Promise<IToast> {
+    if (toastify === null) {
+      toastify = await import("react-toastify");
+
+      toastify.toast.configure({
+        draggable: false,
+        closeOnClick: false,
+        hideProgressBar: true,
+        newestOnTop: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        position: "bottom-right",
+        className: "jp-toastContainer",
+        transition: toastify.Slide
+      });
+    }
+
+    return toastify.toast;
+  }
 }

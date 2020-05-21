@@ -1,6 +1,6 @@
 # jupyterlab_toastify
 
-Integrate 'react-toastify' nicely in JupyterLab.
+Integrate [`react-toastify`](https://github.com/fkhadra/react-toastify) nicely in JupyterLab.
 
 ![example](jupyterlab_notifications.gif)
 
@@ -19,7 +19,7 @@ INotification.info("Info");
 INotification.success("Success");
 
 // Background task with progression animation
-let id = INotification.inProgress("Task in progress!");
+let id = await INotification.inProgress("Task in progress!");
 // -> Update text
 INotification.update({
   toastId: id,
@@ -54,7 +54,7 @@ INotification.dismiss(id);
 INotification.dismiss();
 
 // Default call using `toast` function
-// See https://github.com/fkhadra/react-toastify#usage
+// See https://github.com/fkhadra/react-toastify
 INotification.notify("Default");
 ```
 
@@ -62,17 +62,31 @@ To close a notification, click on the close button.
 
 ## Prerequisites
 
-- [JupyterLab](https://github.com/jupyterlab/jupyterlab/) 1.0
-- [react](https://reactjs.org/) 0.16
-- [react-toastify](https://github.com/fkhadra/react-toastify) 4.4
+- [react](https://reactjs.org/) ^16.0
+- [react-toastify](https://github.com/fkhadra/react-toastify) ^6.0
 
 ## Installation
 
-```bash
-jupyter labextension install jupyterlab_toastify
-```
+This is a pure NPM package since v4. You don't need to install a JupyterLab extension.
+
+The toast container will be added to the DOM automatically by `react-toastify`.
+
+> All functions are asynchronous as `react-toastify` is lazy loaded if required.
 
 ## Changelog
+
+### v4.0.0
+
+- Features
+  - `react-toastify` v5 introduces the ability to add the toast container automatically.
+    This extension uses that ability to remove the need of having a dedicated JupyterLab extension
+    to be installed by users.
+  - Lazy load `react-toastify` => all functions are asynchronous
+  - Bump to `react-toastify` v6
+
+### v3.0.0
+
+Port to JupyterLab v2
 
 ### v2.3.1
 
