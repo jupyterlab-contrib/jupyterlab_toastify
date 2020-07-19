@@ -26,8 +26,8 @@ jobs:
         run: |
           jlpm
           cd test-jlab-toastify
+          jlpm install
           jlpm remove jupyterlab_toastify
           jlpm add file:${PWD}/..
-          jlpm build
           jupyter labextension install .
           python -m jupyterlab.browser_check
