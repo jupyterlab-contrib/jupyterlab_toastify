@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@jupyterlab/application": "^2.0.0",
-    "jupyterlab_toastify": "file:/home/fcollonval/jupyterlab_toastify"
+    "jupyterlab_toastify": "file:/home/fcollonval/jupyterlab_toastify/test-jlab-toastify/.."
   },
   "devDependencies": {
     "@types/react": "^16.9.0",

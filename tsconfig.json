@@ -20,5 +20,6 @@
     "target": "es2017",
     "types": []
   },
-  "include": ["src/*"]
+  "include": ["src/*"],
+  "exclude": ["test-jlab-toastify"]
 }

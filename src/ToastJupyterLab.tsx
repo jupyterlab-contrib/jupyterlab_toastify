@@ -1,4 +1,13 @@
 import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSpinner,
+  faBell,
+  faCheck,
+  faExclamationTriangle,
+  faExclamationCircle
+} from "@fortawesome/free-solid-svg-icons";
+import { closeIcon } from "@jupyterlab/ui-components";
 import {
   ToastContent,
   ToastOptions,
@@ -90,12 +99,15 @@ export namespace INotification {
   function createContent(
     message: React.ReactNode,
     closeHandler: () => void,
-    buttons?: IButton[]
+    buttons?: IButton[],
+    icon?: JSX.Element
   ): React.ReactNode {
-    if (buttons && buttons.length > 0) {
-      return (
-        <div>
-          {message}
+    const hasButtons = buttons && buttons.length > 0;
+    return (
+      <>
+        {icon ? icon : null}
+        {message}
+        {hasButtons && (
           <div className="jp-toast-buttonBar">
             <div className="jp-toast-spacer" />
             {buttons.map((button, idx) => {
@@ -108,26 +120,31 @@ export namespace INotification {
               );
             })}
           </div>
-        </div>
-      );
-    } else {
-      return <div>{message}</div>;
-    }
+        )}
+      </>
+    );
   }
 
   async function createToast(
     message: React.ReactNode,
     buttons?: IButton[],
-    options?: ToastOptions
+    options?: ToastOptions,
+    icon?: JSX.Element
   ): Promise<React.ReactText> {
     let _resolve: (value: React.ReactText) => void;
     const toast = await Private.toast();
     const promise = new Promise<React.ReactText>(resolve => {
       _resolve = resolve;
     });
+    const theOptions = { ...options };
     const toastId: React.ReactText = toast(
       ({ closeToast }: { closeToast: () => void }) =>
-        createContent(message, closeToast, buttons),
+        createContent(
+          message,
+          closeToast,
+          buttons,
+          icon || Private.type2Icon.get(theOptions.type)
+        ),
       {
         ...options,
         onOpen: () => _resolve(toastId)
@@ -186,9 +203,11 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): Promise<React.ReactText> => {
-    const buttons = options && options.buttons;
+    const theOptions = { ...options };
+    const buttons = theOptions.buttons;
     const autoClose =
-      options.autoClose || (buttons && buttons.length > 0 ? false : undefined);
+      theOptions.autoClose ||
+      (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
       type: "info",
       className: "jp-toast-info",
@@ -208,9 +227,11 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): Promise<React.ReactText> => {
-    const buttons = options && options.buttons;
+    const theOptions = { ...options };
+    const buttons = theOptions.buttons;
     const autoClose =
-      options.autoClose || (buttons && buttons.length > 0 ? false : undefined);
+      theOptions.autoClose ||
+      (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
       type: "success",
       className: "jp-toast-success",
@@ -230,11 +251,21 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): Promise<React.ReactText> => {
-    return createToast(message, options && options.buttons, {
-      type: "default",
-      className: "jp-toast-inprogress",
-      autoClose: (options && options.autoClose) || false
-    });
+    return createToast(
+      message,
+      options && options.buttons,
+      {
+        type: "default",
+        className: "jp-toast-inprogress",
+        autoClose: (options && options.autoClose) || false
+      },
+      <FontAwesomeIcon
+        icon={faSpinner}
+        pull="left"
+        spin
+        style={{ color: "var(--jp-inverse-layout-color3)" }}
+      />
+    );
   };
 
   /** Options needed to update an existing toast */
@@ -280,7 +311,12 @@ export namespace INotification {
       };
       toast.update(args.toastId, {
         ...options,
-        render: createContent(args.message, closeToast, args.buttons)
+        render: createContent(
+          args.message,
+          closeToast,
+          args.buttons,
+          Private.type2Icon.get(options.type)
+        )
       });
     } else {
       // Needs to recreate a closed toast
@@ -405,6 +441,42 @@ interface IToast {
 }
 
 namespace Private {
+  export const type2Icon = new Map<TypeOptions, JSX.Element>([
+    ["default", null],
+    [
+      "error",
+      <FontAwesomeIcon
+        icon={faExclamationCircle}
+        pull="left"
+        style={{ color: "var(--jp-error-color1)" }}
+      />
+    ],
+    [
+      "warning",
+      <FontAwesomeIcon
+        icon={faExclamationTriangle}
+        pull="left"
+        style={{ color: "var(--jp-warn-color1)" }}
+      />
+    ],
+    [
+      "info",
+      <FontAwesomeIcon
+        icon={faBell}
+        pull="left"
+        style={{ color: "var(--jp-info-color1)" }}
+      />
+    ],
+    [
+      "success",
+      <FontAwesomeIcon
+        icon={faCheck}
+        pull="left"
+        style={{ color: "var(--jp-success-color1)" }}
+      />
+    ]
+  ]);
+
   let toastify: {
     toast: IToast;
     Slide: (
@@ -417,6 +489,19 @@ namespace Private {
       }: ToastTransitionProps
     ) => JSX.Element;
   } = null;
+
+  const CloseButton: React.FunctionComponent<{ closeToast: () => void }> = ({
+    closeToast
+  }) => (
+    <i onClick={closeToast}>
+      <closeIcon.react
+        className="jp-icon-hover"
+        elementPosition="center"
+        height="16px"
+        width="16px"
+      />
+    </i>
+  );
 
   export async function toast(): Promise<IToast> {
     if (toastify === null) {
@@ -431,7 +516,8 @@ namespace Private {
         pauseOnHover: true,
         position: "bottom-right",
         className: "jp-toastContainer",
-        transition: toastify.Slide
+        transition: toastify.Slide,
+        closeButton: CloseButton
       });
     }
 
