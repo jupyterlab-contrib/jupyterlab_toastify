@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@jupyterlab/application": "^2.0.0",
-    "jupyterlab_toastify": "file:./.."
+    "jupyterlab_toastify": "file:/home/fcollonval/jupyterlab_toastify"
   },
   "devDependencies": {
     "@types/react": "^16.9.0",
@@ -50,9 +50,7 @@
   "jupyterlab": {
     "extension": true
   },
-  "publishConfig": {
-    "access": "private"
-  },
+  "private": true,
   "resolutions": {
     "@types/react": "~16.9.0"
   }
