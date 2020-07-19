@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab_toastify",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Integrate 'react-toastify' nicely in JupyterLab.",
   "keywords": [
     "jupyter",

@@ -75,6 +75,11 @@ The toast container will be added to the DOM automatically by `react-toastify`.
 
 ## Changelog
 
+### v4.1.0
+
+- Features
+  - Use SVG icons
+
 ### v4.0.0
 
 - Features
