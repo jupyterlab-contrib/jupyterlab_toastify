@@ -75,6 +75,11 @@ The toast container will be added to the DOM automatically by `react-toastify`.
 
 ## Changelog
 
+### v4.1.1
+
+- Bug fixes:
+  - Remove dependency on `@jupyterlab/ui-components`
+
 ### v4.1.0
 
 - Features
