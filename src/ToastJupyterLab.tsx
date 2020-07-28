@@ -1,22 +1,48 @@
-import * as React from "react";
+import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
+import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons/faExclamationCircle";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons/faExclamationTriangle";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as React from "react";
 import {
-  faSpinner,
-  faBell,
-  faCheck,
-  faExclamationTriangle,
-  faExclamationCircle
-} from "@fortawesome/free-solid-svg-icons";
-import { closeIcon } from "@jupyterlab/ui-components";
-import {
+  ClearWaitingQueueParams,
+  ToastContainerProps,
   ToastContent,
   ToastOptions,
-  UpdateOptions,
+  ToastTransitionProps,
   TypeOptions,
-  ToastContainerProps,
-  ClearWaitingQueueParams,
-  ToastTransitionProps
+  UpdateOptions
 } from "react-toastify";
+
+// import { closeIcon } from "@jupyterlab/ui-components";  // Not available on JLab 1.x #8
+const closeIcon: JSX.Element = (
+  <svg
+    element-position="center"
+    height="16px"
+    viewBox="0 0 24 24"
+    width="16px"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      className="jp-icon-none jp-icon-selectable-inverse jp-icon3-hover"
+      fill="none"
+    >
+      <circle cx="12" cy="12" r="11" />
+    </g>
+
+    <g
+      className="jp-icon3 jp-icon-selectable jp-icon-accent2-hover"
+      fill="#616161"
+    >
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+    </g>
+
+    <g className="jp-icon-none jp-icon-busy" fill="none">
+      <circle cx="12" cy="12" r="7" />
+    </g>
+  </svg>
+);
 
 export namespace INotification {
   export interface IButton {
@@ -494,12 +520,7 @@ namespace Private {
     closeToast
   }) => (
     <i onClick={closeToast}>
-      <closeIcon.react
-        className="jp-icon-hover"
-        elementPosition="center"
-        height="16px"
-        width="16px"
-      />
+      <span className="jp-icon-hover">{closeIcon}</span>
     </i>
   );
 
