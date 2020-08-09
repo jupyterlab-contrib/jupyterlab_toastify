@@ -13,6 +13,10 @@
   cursor: default;
 }
 
+.Toastify__toast-body > svg.svg-inline--fa {
+  margin-top: 0.2em;
+}
+
 .Toastify__toast--error {
   border-top: 5px solid var(--jp-error-color1);
 }
@@ -29,7 +33,7 @@
   border-top: 5px solid var(--jp-success-color1);
 }
 
-.Toastify__toast--default.jp-toast-inprogress {
+.Toastify__toast--default.jp-toast-in-progress {
   border-top: 5px solid var(--jp-layout-color1);
 }
 

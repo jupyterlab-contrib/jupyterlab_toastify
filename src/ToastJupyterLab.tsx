@@ -112,7 +112,7 @@ export namespace INotification {
      * Autoclosing behavior - undefined (not closing automatically)
      * or number (time in milliseconds before closing a toast)
      */
-    autoClose?: number;
+    autoClose?: number | false;
   }
 
   /**
@@ -154,8 +154,7 @@ export namespace INotification {
   async function createToast(
     message: React.ReactNode,
     buttons?: IButton[],
-    options?: ToastOptions,
-    icon?: JSX.Element
+    options?: ToastOptions
   ): Promise<React.ReactText> {
     let _resolve: (value: React.ReactText) => void;
     const toast = await Private.toast();
@@ -169,10 +168,11 @@ export namespace INotification {
           message,
           closeToast,
           buttons,
-          icon || Private.type2Icon.get(theOptions.type)
+          Private.type2Icon.get(theOptions.type || "in-progress")
         ),
       {
         ...options,
+        className: `jp-toast-${theOptions.type || "in-progress"}`,
         onOpen: () => _resolve(toastId)
       }
     );
@@ -194,7 +194,6 @@ export namespace INotification {
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
       type: "error",
-      className: "jp-toast-error",
       autoClose: (options && options.autoClose) || false
     });
   };
@@ -212,7 +211,6 @@ export namespace INotification {
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
       type: "warning",
-      className: "jp-toast-warning",
       autoClose: (options && options.autoClose) || false
     });
   };
@@ -236,7 +234,6 @@ export namespace INotification {
       (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
       type: "info",
-      className: "jp-toast-info",
       autoClose: autoClose
     });
   };
@@ -260,7 +257,6 @@ export namespace INotification {
       (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
       type: "success",
-      className: "jp-toast-success",
       autoClose: autoClose
     });
   };
@@ -277,21 +273,9 @@ export namespace INotification {
     message: React.ReactNode,
     options?: IOptions
   ): Promise<React.ReactText> => {
-    return createToast(
-      message,
-      options && options.buttons,
-      {
-        type: "default",
-        className: "jp-toast-inprogress",
-        autoClose: (options && options.autoClose) || false
-      },
-      <FontAwesomeIcon
-        icon={faSpinner}
-        pull="left"
-        spin
-        style={{ color: "var(--jp-inverse-layout-color3)" }}
-      />
-    );
+    return createToast(message, options && options.buttons, {
+      autoClose: (options && options.autoClose) || false
+    });
   };
 
   /** Options needed to update an existing toast */
@@ -341,7 +325,8 @@ export namespace INotification {
           args.message,
           closeToast,
           args.buttons,
-          Private.type2Icon.get(options.type)
+          // If not type specified, assumes it is `in progress`
+          Private.type2Icon.get(options.type || "in-progress")
         )
       });
     } else {
@@ -350,9 +335,7 @@ export namespace INotification {
       // If not type specified, assumes it is `in progress`
       const newOptions: ToastOptions = {
         autoClose: false,
-        className: "jp-toast-inprogress",
         toastId: args.toastId,
-        type: "default",
         ...options
       };
 
@@ -467,8 +450,17 @@ interface IToast {
 }
 
 namespace Private {
-  export const type2Icon = new Map<TypeOptions, JSX.Element>([
+  export const type2Icon = new Map<TypeOptions | "in-progress", JSX.Element>([
     ["default", null],
+    [
+      "in-progress",
+      <FontAwesomeIcon
+        icon={faSpinner}
+        pull="left"
+        spin
+        style={{ color: "var(--jp-inverse-layout-color3)" }}
+      />
+    ],
     [
       "error",
       <FontAwesomeIcon
