@@ -1,4 +1,6 @@
 # jupyterlab_toastify
+[![GitHub CI](https://github.com/fcollonval/jupyterlab_toastify/workflows/CI/badge.svg)](https://github.com/fcollonval/jupyterlab_toastify/actions?query=workflow%3ACI)
+[![npm](https://img.shields.io/npm/v/jupyterlab_toastify.svg?style=flat-square)](https://www.npmjs.com/package/jupyterlab_toastify)
 
 Integrate [`react-toastify`](https://github.com/fkhadra/react-toastify) nicely in JupyterLab.
 
