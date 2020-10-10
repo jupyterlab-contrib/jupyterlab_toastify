@@ -6,3 +6,4 @@ node_modules/
 *.log
 tsconfig.tsbuildinfo
 test-jlab-toastify/yarn.lock
+test-jlab-toastify/jupyterlab_toastify-dev.tgz
