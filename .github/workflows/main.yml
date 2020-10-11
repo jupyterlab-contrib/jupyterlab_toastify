@@ -25,9 +25,10 @@ jobs:
       - name: Build the extension
         run: |
           jlpm
-          jlpm pack --filename test-jlab-toastify/jupyterlab_toastify-dev.tgz
+          tmp_pkg=$(mktemp -d)
+          jlpm pack --filename ${tmp_pkg}/jupyterlab_toastify-dev.tgz
           cd test-jlab-toastify
-          jlpm add file://${PWD}/jupyterlab_toastify-dev.tgz
+          jlpm add file://${tmp_pkg}/jupyterlab_toastify-dev.tgz
           python -m pip install .
   
           jupyter labextension list 2>&1 | grep -ie "test-jlab-toastify.*OK"
