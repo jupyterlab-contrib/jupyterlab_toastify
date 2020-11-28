@@ -4,7 +4,7 @@
 set -eux
 jlpm install
 cd packages/jupyterlab_toastify
-yarn run build
+jlpm run build
 cd ../..
 
 jupyter labextension link packages/jupyterlab_toastify packages/test-jlab-toastify --no-build
