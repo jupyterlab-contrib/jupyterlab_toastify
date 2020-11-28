@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - conda-forge/label/jupyterlab_rc
+  - conda-forge/label/jupyterlab_server_rc
+dependencies:
+  - python >=3.6,<3.9
+  - jupyterlab =3
+  - nodejs >=11

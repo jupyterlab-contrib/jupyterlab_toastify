@@ -21,10 +21,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jupyterlab~=2.0
+          pip install jupyterlab
       - name: Build and publish NPM package
         run: |
-          npm install
+          yarn install
+          cd packages/jupyterlab_toastify
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

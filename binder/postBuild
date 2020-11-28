@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+# Binder postBuild instructions
+set -eux
+jlpm install
+cd packages/jupyterlab_toastify
+yarn run build
+cd ../..
+
+jupyter labextension link packages/jupyterlab_toastify packages/test-jlab-toastify --no-build
+jupyter lab build --minimize=False
