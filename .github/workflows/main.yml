@@ -24,12 +24,11 @@ jobs:
         run: python -m pip install --pre jupyterlab
       - name: Build the extension
         run: |
-          jlpm
-          tmp_pkg=$(mktemp -d)
-          jlpm pack --filename ${tmp_pkg}/jupyterlab_toastify-dev.tgz
-          cd test-jlab-toastify
-          jlpm add file://${tmp_pkg}/jupyterlab_toastify-dev.tgz
-          python -m pip install .
+          jlpm install
+          cd packages/jupyterlab_toastify
+          jlpm run build
+          cd ..
+          jupyter labextension link jupyterlab_toastify test-jlab-toastify
   
           jupyter labextension list 2>&1 | grep -ie "test-jlab-toastify.*OK"
           python -m jupyterlab.browser_check
