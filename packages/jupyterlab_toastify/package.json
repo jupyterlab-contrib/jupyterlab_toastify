@@ -7,9 +7,9 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "homepage": "https://github.com/fcollonval/jupyterlab_toastify",
+  "homepage": "https://github.com/jupyterlab-contrib/jupyterlab_toastify",
   "bugs": {
-    "url": "https://github.com/fcollonval/jupyterlab_toastify/issues"
+    "url": "https://github.com/jupyterlab-contrib/jupyterlab_toastify/issues"
   },
   "license": "BSD-3-Clause",
   "author": "Frederic Collonval",
@@ -22,7 +22,7 @@
   "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fcollonval/jupyterlab_toastify.git"
+    "url": "https://github.com/jupyterlab-contrib/jupyterlab_toastify.git"
   },
   "scripts": {
     "build": "tsc",
@@ -42,12 +42,18 @@
     "react-dom": "^16.6.0 || ^17.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.0",
+    "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.22.0",
     "husky": "^0.14.3",
     "prettier": "^1.19.0",
     "pretty-quick": "^1.6.0",
-    "react": "^16.13.1 || ^17.0.0",
-    "react-dom": "^16.13.0 || ^17.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "rimraf": "^3.0.2",
     "typescript": "~4.0.3"
   },

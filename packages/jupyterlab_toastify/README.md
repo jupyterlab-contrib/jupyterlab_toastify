@@ -1,12 +1,20 @@
 # jupyterlab_toastify
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fcollonval/jupyterlab_toastify/master?urlpath=lab)
-[![GitHub CI](https://github.com/fcollonval/jupyterlab_toastify/workflows/CI/badge.svg)](https://github.com/fcollonval/jupyterlab_toastify/actions?query=workflow%3ACI)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyterlab-contrib/jupyterlab_toastify/master?urlpath=lab)
+[![GitHub CI](https://github.com/jupyterlab-contrib/jupyterlab_toastify/workflows/CI/badge.svg)](https://github.com/jupyterlab-contrib/jupyterlab_toastify/actions?query=workflow%3ACI)
 [![npm](https://img.shields.io/npm/v/jupyterlab_toastify.svg?style=flat-square)](https://www.npmjs.com/package/jupyterlab_toastify)
 
 Integrate [`react-toastify`](https://github.com/fkhadra/react-toastify) nicely in JupyterLab.
 
-![example](jupyterlab_notifications.gif)
+![example](https://raw.githubusercontent.com/jupyterlab-contrib/jupyterlab_toastify/master/jupyterlab_notifications.gif)
+
+## Installation
+
+This package is not a JupyterLab extension but a regular npm package. So to add it to your project:
+
+```
+jlpm add jupyterlab_toastify
+```
 
 ## Usage
 
@@ -78,6 +86,11 @@ The toast container will be added to the DOM automatically by `react-toastify`.
 > All functions are asynchronous as `react-toastify` is lazy loaded if required.
 
 ## Changelog
+
+### v4.1.2
+
+- New feature:
+  - Support JupyterLab 3
 
 ### v4.1.1
 

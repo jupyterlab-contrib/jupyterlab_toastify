@@ -4,9 +4,10 @@ include pyproject.toml
 include jupyter-config/test-jlab-toastify.json
 
 include package.json
+include install.json
 include ts*.json
 
-graft test-jlab-toastify/static
+graft test-jlab-toastify/labextension
 
 # Javascript files
 graft src

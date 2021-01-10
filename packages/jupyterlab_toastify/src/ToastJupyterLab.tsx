@@ -1,10 +1,13 @@
-import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
-import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons/faExclamationCircle";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons/faExclamationTriangle";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as React from "react";
+/* eslint-disable no-inner-declarations */
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/prop-types */
+import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
 import {
   ClearWaitingQueueParams,
   ToastContainerProps,
@@ -13,7 +16,7 @@ import {
   ToastTransitionProps,
   TypeOptions,
   UpdateOptions
-} from "react-toastify";
+} from 'react-toastify';
 
 // import { closeIcon } from "@jupyterlab/ui-components";  // Not available on JLab 1.x #8
 const closeIcon: JSX.Element = (
@@ -67,7 +70,7 @@ export namespace INotification {
     className?: string;
   }
 
-  interface ToastButtonProps {
+  interface IToastButtonProps {
     /**
      * User specification for the button
      */
@@ -86,11 +89,11 @@ export namespace INotification {
   }: {
     button: IButton;
     closeToast: () => void;
-  }): React.ReactElement<ToastButtonProps> => {
-    let fullClassName =
+  }): React.ReactElement<IToastButtonProps> => {
+    const fullClassName =
       button.className === undefined
-        ? "jp-toast-button"
-        : "jp-toast-button " + button.className;
+        ? 'jp-toast-button'
+        : 'jp-toast-button ' + button.className;
     const clickHandler = () => {
       closeToast();
       button.callback();
@@ -139,7 +142,7 @@ export namespace INotification {
             {buttons.map((button, idx) => {
               return (
                 <ToastButton
-                  key={"button-" + idx}
+                  key={'button-' + idx}
                   button={button}
                   closeToast={closeHandler}
                 />
@@ -168,11 +171,11 @@ export namespace INotification {
           message,
           closeToast,
           buttons,
-          Private.type2Icon.get(theOptions.type || "in-progress")
+          Private.type2Icon.get(theOptions.type || 'in-progress')
         ),
       {
         ...options,
-        className: `jp-toast-${theOptions.type || "in-progress"}`,
+        className: `jp-toast-${theOptions.type || 'in-progress'}`,
         onOpen: () => _resolve(toastId)
       }
     );
@@ -193,7 +196,7 @@ export namespace INotification {
     options?: IOptions
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
-      type: "error",
+      type: 'error',
       autoClose: (options && options.autoClose) || false
     });
   };
@@ -210,7 +213,7 @@ export namespace INotification {
     options?: IOptions
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
-      type: "warning",
+      type: 'warning',
       autoClose: (options && options.autoClose) || false
     });
   };
@@ -233,7 +236,7 @@ export namespace INotification {
       theOptions.autoClose ||
       (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
-      type: "info",
+      type: 'info',
       autoClose: autoClose
     });
   };
@@ -256,7 +259,7 @@ export namespace INotification {
       theOptions.autoClose ||
       (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
-      type: "success",
+      type: 'success',
       autoClose: autoClose
     });
   };
@@ -304,7 +307,7 @@ export namespace INotification {
   export const update = async (args: IUpdate): Promise<void> => {
     const toast = await Private.toast();
     const buttons = args.buttons;
-    let options: ToastOptions = {};
+    const options: ToastOptions = {};
     if (args.type) {
       options.type = args.type;
     }
@@ -326,7 +329,7 @@ export namespace INotification {
           closeToast,
           args.buttons,
           // If not type specified, assumes it is `in progress`
-          Private.type2Icon.get(options.type || "in-progress")
+          Private.type2Icon.get(options.type || 'in-progress')
         )
       });
     } else {
@@ -450,62 +453,60 @@ interface IToast {
 }
 
 namespace Private {
-  export const type2Icon = new Map<TypeOptions | "in-progress", JSX.Element>([
-    ["default", null],
+  export const type2Icon = new Map<TypeOptions | 'in-progress', JSX.Element>([
+    ['default', null],
     [
-      "in-progress",
+      'in-progress',
       <FontAwesomeIcon
         icon={faSpinner}
         pull="left"
         spin
-        style={{ color: "var(--jp-inverse-layout-color3)" }}
+        style={{ color: 'var(--jp-inverse-layout-color3)' }}
       />
     ],
     [
-      "error",
+      'error',
       <FontAwesomeIcon
         icon={faExclamationCircle}
         pull="left"
-        style={{ color: "var(--jp-error-color1)" }}
+        style={{ color: 'var(--jp-error-color1)' }}
       />
     ],
     [
-      "warning",
+      'warning',
       <FontAwesomeIcon
         icon={faExclamationTriangle}
         pull="left"
-        style={{ color: "var(--jp-warn-color1)" }}
+        style={{ color: 'var(--jp-warn-color1)' }}
       />
     ],
     [
-      "info",
+      'info',
       <FontAwesomeIcon
         icon={faBell}
         pull="left"
-        style={{ color: "var(--jp-info-color1)" }}
+        style={{ color: 'var(--jp-info-color1)' }}
       />
     ],
     [
-      "success",
+      'success',
       <FontAwesomeIcon
         icon={faCheck}
         pull="left"
-        style={{ color: "var(--jp-success-color1)" }}
+        style={{ color: 'var(--jp-success-color1)' }}
       />
     ]
   ]);
 
   let toastify: {
     toast: IToast;
-    Slide: (
-      {
-        children,
-        position,
-        preventExitTransition,
-        done,
-        ...props
-      }: ToastTransitionProps
-    ) => JSX.Element;
+    Slide: ({
+      children,
+      position,
+      preventExitTransition,
+      done,
+      ...props
+    }: ToastTransitionProps) => JSX.Element;
   } = null;
 
   const CloseButton: React.FunctionComponent<{ closeToast: () => void }> = ({
@@ -518,7 +519,7 @@ namespace Private {
 
   export async function toast(): Promise<IToast> {
     if (toastify === null) {
-      toastify = await import("react-toastify");
+      toastify = await import('react-toastify');
 
       toastify.toast.configure({
         draggable: false,
@@ -527,8 +528,8 @@ namespace Private {
         newestOnTop: true,
         pauseOnFocusLoss: true,
         pauseOnHover: true,
-        position: "bottom-right",
-        className: "jp-toastContainer",
+        position: 'bottom-right',
+        className: 'jp-toastContainer',
         transition: toastify.Slide,
         closeButton: CloseButton
       });

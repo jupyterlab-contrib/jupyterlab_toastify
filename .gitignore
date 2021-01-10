@@ -7,3 +7,4 @@ node_modules/
 tsconfig.tsbuildinfo
 test-jlab-toastify/yarn.lock
 test-jlab-toastify/jupyterlab_toastify-dev.tgz
+packages/test-jlab-toastify/test_jlab_toastify/labextension/

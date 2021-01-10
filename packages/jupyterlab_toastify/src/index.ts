@@ -1,3 +1,3 @@
-import "../style/index.css";
+import '../style/index.css';
 
-export { INotification } from "./ToastJupyterLab";
+export { INotification } from './ToastJupyterLab';

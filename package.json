@@ -1,4 +1,8 @@
 {
+    "scripts": {
+        "eslint": "eslint . --ext .ts,.tsx --fix",
+        "eslint:check": "eslint . --ext .ts,.tsx"
+    },
     "private": true,
     "workspaces": [
         "packages/jupyterlab_toastify",
