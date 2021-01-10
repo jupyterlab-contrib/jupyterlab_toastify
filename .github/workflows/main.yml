@@ -25,8 +25,8 @@ jobs:
       - name: Build the extension
         run: |
           jlpm install
-          cd packages/jupyterlab_toastify
           jlpm run eslint:check
+          cd packages/jupyterlab_toastify
           jlpm run build
           cd ..
           jupyter labextension link jupyterlab_toastify test-jlab-toastify
