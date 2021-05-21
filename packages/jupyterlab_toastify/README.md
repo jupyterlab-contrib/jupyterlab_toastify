@@ -75,7 +75,7 @@ To close a notification, click on the close button.
 ## Prerequisites
 
 - [react](https://reactjs.org/) ^16.0 || ^17.0
-- [react-toastify](https://github.com/fkhadra/react-toastify) ^6.0
+- [react-toastify](https://github.com/fkhadra/react-toastify) ^7.0
 
 ## Installation
 
@@ -86,6 +86,10 @@ The toast container will be added to the DOM automatically by `react-toastify`.
 > All functions are asynchronous as `react-toastify` is lazy loaded if required.
 
 ## Changelog
+
+### v4.2.0
+
+- Update to [`react-toastify` v7](https://github.com/fkhadra/react-toastify/releases/tag/v7.0.0)
 
 ### v4.1.2
 
