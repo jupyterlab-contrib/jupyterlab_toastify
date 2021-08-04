@@ -19,42 +19,42 @@ jlpm add jupyterlab_toastify
 ## Usage
 
 ```javascript
-import { INotification } from "jupyterlab_toastify";
+import { INotification } from 'jupyterlab_toastify';
 
 // Error message notification - do not close automatically
-INotification.error("Error");
+INotification.error('Error');
 // Warning message notification - do not close automatically
-INotification.warning("Warning");
+INotification.warning('Warning');
 // Info message notification
-INotification.info("Info");
+INotification.info('Info');
 // Success message notification
-INotification.success("Success");
+INotification.success('Success');
 
 // Background task with progression animation
-let id = await INotification.inProgress("Task in progress!");
+let id = await INotification.inProgress('Task in progress!');
 // -> Update text
 INotification.update({
   toastId: id,
-  message: "Updating task..."
+  message: 'Updating task...'
 });
 // -> Update text, status and set closing delay (in ms)
 INotification.update({
   toastId: id,
-  message: "Task succeed",
-  type: "success",
+  message: 'Task succeed',
+  type: 'success',
   autoClose: 3000
 });
 
 // Notification with two buttons
-INotification.error("Error with button", {
+INotification.error('Error with button', {
   buttons: [
     {
-      label: "Action1",
-      callback: () => alert("Action1 was clicked")
+      label: 'Action1',
+      callback: () => alert('Action1 was clicked')
     },
     {
-      label: "Action2",
-      callback: () => alert("Action2 was clicked")
+      label: 'Action2',
+      callback: () => alert('Action2 was clicked')
     }
   ]
 });
@@ -67,7 +67,7 @@ INotification.dismiss();
 
 // Default call using `toast` function
 // See https://github.com/fkhadra/react-toastify
-INotification.notify("Default");
+INotification.notify('Default');
 ```
 
 To close a notification, click on the close button.
@@ -90,6 +90,14 @@ The toast container will be added to the DOM automatically by `react-toastify`.
 ### v4.2.0
 
 - Update to [`react-toastify` v7](https://github.com/fkhadra/react-toastify/releases/tag/v7.0.0)
+- Security updates:
+  - Bump ini from 1.3.5 to 1.3.8 (#14)
+  - Bump ssri from 8.0.0 to 8.0.1 (#15)
+  - Bump hosted-git-info from 2.8.8 to 2.8.9 (#16)
+  - Bump lodash from 4.17.20 to 4.17.21 (#17)
+  - Bump ws from 7.4.5 to 7.4.6 (#19)
+  - Bump normalize-url from 4.5.0 to 4.5.1 (#20)
+  - Bump tar from 6.1.0 to 6.1.5 (#21)
 
 ### v4.1.2
 
