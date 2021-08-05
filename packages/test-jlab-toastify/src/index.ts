@@ -1,6 +1,6 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
 import { INotification } from 'jupyterlab_toastify';
@@ -28,7 +28,7 @@ const extension: JupyterFrontEndPlugin<void> = {
         // -> Update text
         INotification.update({
           toastId: id,
-          message: 'Updating task...'
+          message: 'Updating task...',
         });
         setTimeout(() => {
           // -> Update text, status and set closing delay (in ms)
@@ -36,7 +36,7 @@ const extension: JupyterFrontEndPlugin<void> = {
             toastId: id,
             message: 'Task succeed',
             type: 'success',
-            autoClose: 3000
+            autoClose: 3000,
           });
         }, 3000);
       }, 3000);
@@ -46,13 +46,13 @@ const extension: JupyterFrontEndPlugin<void> = {
         buttons: [
           {
             label: 'Action1',
-            callback: () => alert('Action1 was clicked')
+            callback: (): void => alert('Action1 was clicked'),
           },
           {
             label: 'Action2',
-            callback: () => alert('Action2 was clicked')
-          }
-        ]
+            callback: (): void => alert('Action2 was clicked'),
+          },
+        ],
       });
 
       // Close a toast specified by its id
@@ -65,7 +65,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       // See https://github.com/fkhadra/react-toastify
       INotification.notify('Default');
     });
-  }
+  },
 };
 
 export default extension;
