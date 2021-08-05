@@ -15,7 +15,7 @@ import {
   ToastOptions,
   ToastTransitionProps,
   TypeOptions,
-  UpdateOptions
+  UpdateOptions,
 } from 'react-toastify';
 
 // import { closeIcon } from "@jupyterlab/ui-components";  // Not available on JLab 1.x #8
@@ -85,7 +85,7 @@ export namespace INotification {
   /** Create a button with customized callback in a toast */
   const ToastButton = ({
     button,
-    closeToast
+    closeToast,
   }: {
     button: IButton;
     closeToast: () => void;
@@ -94,7 +94,7 @@ export namespace INotification {
       button.className === undefined
         ? 'jp-toast-button'
         : 'jp-toast-button ' + button.className;
-    const clickHandler = () => {
+    const clickHandler = (): void => {
       closeToast();
       button.callback();
     };
@@ -161,7 +161,7 @@ export namespace INotification {
   ): Promise<React.ReactText> {
     let _resolve: (value: React.ReactText) => void;
     const toast = await Private.toast();
-    const promise = new Promise<React.ReactText>(resolve => {
+    const promise = new Promise<React.ReactText>((resolve) => {
       _resolve = resolve;
     });
     const theOptions = { ...options };
@@ -176,7 +176,7 @@ export namespace INotification {
       {
         ...options,
         className: `jp-toast-${theOptions.type || 'in-progress'}`,
-        onOpen: () => _resolve(toastId)
+        onOpen: () => _resolve(toastId),
       }
     );
 
@@ -197,7 +197,7 @@ export namespace INotification {
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
       type: 'error',
-      autoClose: (options && options.autoClose) || false
+      autoClose: (options && options.autoClose) || false,
     });
   };
   /**
@@ -214,7 +214,7 @@ export namespace INotification {
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
       type: 'warning',
-      autoClose: (options && options.autoClose) || false
+      autoClose: (options && options.autoClose) || false,
     });
   };
 
@@ -237,7 +237,7 @@ export namespace INotification {
       (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
       type: 'info',
-      autoClose: autoClose
+      autoClose: autoClose,
     });
   };
 
@@ -260,7 +260,7 @@ export namespace INotification {
       (buttons && buttons.length > 0 ? false : undefined);
     return createToast(message, buttons, {
       type: 'success',
-      autoClose: autoClose
+      autoClose: autoClose,
     });
   };
 
@@ -277,7 +277,7 @@ export namespace INotification {
     options?: IOptions
   ): Promise<React.ReactText> => {
     return createToast(message, options && options.buttons, {
-      autoClose: (options && options.autoClose) || false
+      autoClose: (options && options.autoClose) || false,
     });
   };
 
@@ -319,7 +319,7 @@ export namespace INotification {
 
     if (toast.isActive(args.toastId)) {
       // Update existing toast
-      const closeToast = () => {
+      const closeToast = (): void => {
         toast.dismiss(args.toastId);
       };
       toast.update(args.toastId, {
@@ -330,7 +330,7 @@ export namespace INotification {
           args.buttons,
           // If not type specified, assumes it is `in progress`
           Private.type2Icon.get(options.type || 'in-progress')
-        )
+        ),
       });
     } else {
       // Needs to recreate a closed toast
@@ -339,7 +339,7 @@ export namespace INotification {
       const newOptions: ToastOptions = {
         autoClose: false,
         toastId: args.toastId,
-        ...options
+        ...options,
       };
 
       await createToast(args.message, args.buttons, newOptions);
@@ -462,7 +462,7 @@ namespace Private {
         pull="left"
         spin
         style={{ color: 'var(--jp-inverse-layout-color3)' }}
-      />
+      />,
     ],
     [
       'error',
@@ -470,7 +470,7 @@ namespace Private {
         icon={faExclamationCircle}
         pull="left"
         style={{ color: 'var(--jp-error-color1)' }}
-      />
+      />,
     ],
     [
       'warning',
@@ -478,7 +478,7 @@ namespace Private {
         icon={faExclamationTriangle}
         pull="left"
         style={{ color: 'var(--jp-warn-color1)' }}
-      />
+      />,
     ],
     [
       'info',
@@ -486,7 +486,7 @@ namespace Private {
         icon={faBell}
         pull="left"
         style={{ color: 'var(--jp-info-color1)' }}
-      />
+      />,
     ],
     [
       'success',
@@ -494,8 +494,8 @@ namespace Private {
         icon={faCheck}
         pull="left"
         style={{ color: 'var(--jp-success-color1)' }}
-      />
-    ]
+      />,
+    ],
   ]);
 
   let toastify: {
@@ -510,7 +510,7 @@ namespace Private {
   } = null;
 
   const CloseButton: React.FunctionComponent<{ closeToast: () => void }> = ({
-    closeToast
+    closeToast,
   }) => (
     <i onClick={closeToast}>
       <span className="jp-icon-hover">{closeIcon}</span>
@@ -531,7 +531,7 @@ namespace Private {
         position: 'bottom-right',
         className: 'jp-toastContainer',
         transition: toastify.Slide,
-        closeButton: CloseButton
+        closeButton: CloseButton,
       });
     }
 
