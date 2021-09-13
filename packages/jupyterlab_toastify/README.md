@@ -1,5 +1,6 @@
 # jupyterlab_toastify
 
+[![Extension status](https://img.shields.io/badge/status-ready-success "ready to be used")](https://jupyterlab-contrib.github.io/)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyterlab-contrib/jupyterlab_toastify/master?urlpath=lab)
 [![GitHub CI](https://github.com/jupyterlab-contrib/jupyterlab_toastify/workflows/CI/badge.svg)](https://github.com/jupyterlab-contrib/jupyterlab_toastify/actions?query=workflow%3ACI)
 [![npm](https://img.shields.io/npm/v/jupyterlab_toastify.svg?style=flat-square)](https://www.npmjs.com/package/jupyterlab_toastify)
