@@ -1,3 +1,5 @@
+As of JupyterLab v3.6.0, notification is a built-in feature. We highly recommend using it - see [documentation](https://jupyterlab.readthedocs.io/en/stable/extension/ui_helpers.html#notifications).
+
 # jupyterlab_toastify
 
 [![Extension status](https://img.shields.io/badge/status-ready-success "ready to be used")](https://jupyterlab-contrib.github.io/)
